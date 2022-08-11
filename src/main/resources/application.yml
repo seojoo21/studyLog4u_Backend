@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    default: local #기본 환경을 local로
