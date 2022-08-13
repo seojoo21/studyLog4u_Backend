@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SlackBot {
 
-    @Value("${slack.token}")
     private String slackToken;
 
 }

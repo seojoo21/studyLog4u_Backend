@@ -3,4 +3,5 @@ server:
 
 spring:
   profiles:
+    include: oauth
     default: local #기본 환경을 local로

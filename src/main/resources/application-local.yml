@@ -48,3 +48,12 @@ jasypt:
     bean: jasyptStringEncryptor
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+app:
+  auth:
+    tokenSecret:
+    tokenExpiry:
+    refreshToeknExpiry:
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
