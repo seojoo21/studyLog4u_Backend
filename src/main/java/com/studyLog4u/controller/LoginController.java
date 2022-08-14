@@ -3,6 +3,7 @@ package com.studyLog4u.controller;
 import com.studyLog4u.oauth.OauthService;
 import com.studyLog4u.oauth.SocialLoginType;
 import com.studyLog4u.oauth.SocialLoginTypeConverter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 
+@Tag(name="Login Controller", description = "로그인 관련 컨트롤러")
 @RestController
 @RequestMapping("/api/login")
 @Slf4j
