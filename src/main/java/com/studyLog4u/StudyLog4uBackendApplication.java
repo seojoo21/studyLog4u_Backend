@@ -1,14 +1,14 @@
 package com.studyLog4u;
 
+import com.studyLog4u.security.oauth2.properties.AppProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication
 @EnableJpaAuditing
+@EnableConfigurationProperties(AppProperties.class)
+@SpringBootApplication
 public class StudyLog4uBackendApplication {
 
     public static void main(String[] args) {

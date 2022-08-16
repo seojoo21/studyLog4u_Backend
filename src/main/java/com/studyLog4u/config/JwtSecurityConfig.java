@@ -1,7 +1,7 @@
 package com.studyLog4u.config;
 
-import com.studyLog4u.jwt.JwtFilter;
-import com.studyLog4u.jwt.JwtTokenProvider;
+import com.studyLog4u.security.jwt.JwtFilter;
+import com.studyLog4u.security.jwt.JwtTokenProvider;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;

@@ -1,9 +1,8 @@
-package com.studyLog4u.jwt;
+package com.studyLog4u.security.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -29,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
 
     /**
      * JWT 토큰의 인증정보를 현재 실행중인 SecurityContext 에 저장
-     * resolveToken 을 통해 토큰을 받아와서 유효성 검증을 하고 토큰이 정상적이면 Authenticaion 객체를 받아와서SecurityContext 에 저장
+     * resolveToken 을 통해 토큰을 받아와서 유효성 검증을 하고 토큰이 정상적이면 Authenticaion 객체를 받아와서 SecurityContext 에 저장
      * @param request  The request to process
      * @param response The response associated with the request
      * @param chain    Provides access to the next filter in the chain for this
@@ -57,7 +56,7 @@ public class JwtFilter extends GenericFilterBean {
 
     private String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }
         return null;

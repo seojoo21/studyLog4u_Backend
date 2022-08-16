@@ -1,8 +1,7 @@
 package com.studyLog4u.controller;
 
-import com.studyLog4u.oauth.OauthService;
-import com.studyLog4u.oauth.SocialLoginType;
-import com.studyLog4u.oauth.SocialLoginTypeConverter;
+import com.studyLog4u.security.oauth2.service.OauthService;
+import com.studyLog4u.security.oauth2.enums.SocialLoginType;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

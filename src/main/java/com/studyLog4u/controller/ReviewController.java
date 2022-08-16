@@ -1,7 +1,7 @@
 package com.studyLog4u.controller;
 
 import com.studyLog4u.common.ApiDataResponse;
-import com.studyLog4u.utils.ApiDocumentResponse;
+import com.studyLog4u.common.ApiDocumentResponse;
 import com.studyLog4u.dto.ReviewDto;
 import com.studyLog4u.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;

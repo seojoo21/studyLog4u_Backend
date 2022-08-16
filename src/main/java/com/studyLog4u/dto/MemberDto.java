@@ -1,6 +1,7 @@
 package com.studyLog4u.dto;
 
-import com.studyLog4u.oauth.SocialLoginType;
+import com.studyLog4u.security.oauth2.enums.RoleType;
+import com.studyLog4u.security.oauth2.enums.SocialLoginType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class MemberDto {
     private String email;
     private String nickname;
     private SocialLoginType socialType;
+    private RoleType roleType;
     private LocalDateTime regDate, moDate;
 }

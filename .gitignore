@@ -36,5 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
+### 깃헙 업로드 제외 파일 ###
 src/main/resources/oracleWallet
 logs/
+application-oauth.yml

@@ -1,4 +1,4 @@
-package com.studyLog4u.utils;
+package com.studyLog4u.common;
 
 import com.studyLog4u.common.ApiDataResponse;
 import io.swagger.v3.oas.annotations.media.Content;

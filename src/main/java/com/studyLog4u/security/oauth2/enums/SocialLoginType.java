@@ -1,4 +1,4 @@
-package com.studyLog4u.oauth;
+package com.studyLog4u.security.oauth2.enums;
 
 import lombok.Getter;
 

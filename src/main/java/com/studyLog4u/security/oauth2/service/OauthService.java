@@ -1,5 +1,7 @@
-package com.studyLog4u.oauth;
+package com.studyLog4u.security.oauth2.service;
 
+import com.studyLog4u.security.oauth2.enums.SocialLoginType;
+import com.studyLog4u.security.oauth2.oauth.impl.GoogleOauth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

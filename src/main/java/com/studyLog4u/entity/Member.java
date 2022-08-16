@@ -1,6 +1,7 @@
 package com.studyLog4u.entity;
 
-import com.studyLog4u.oauth.SocialLoginType;
+import com.studyLog4u.security.oauth2.enums.RoleType;
+import com.studyLog4u.security.oauth2.enums.SocialLoginType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,4 +28,15 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar2(20)", name="socialtype")
     private SocialLoginType socialType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar2(15)", name="roletype")
+    private RoleType roleType;
+
+    public Member(String email, String nickname, SocialLoginType socialType, RoleType roleType) {
+        this.email = email;
+        this.nickname = nickname;
+        this.socialType = socialType;
+        this.roleType = roleType;
+    }
 }

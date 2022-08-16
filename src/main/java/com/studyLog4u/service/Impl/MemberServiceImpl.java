@@ -21,13 +21,20 @@ public class MemberServiceImpl implements MemberService {
     public void join(MemberDto dto) {
         Member entity = dtoToEntity(dto);
         memberRepository.save(entity);
-        log.info("MemberServiceImpl: join...");
+        log.info("MemberServiceImpl: New Member Join...");
     }
 
     @Override
-    public MemberDto getMember(String email) {
-        Optional<Member> result = memberRepository.findByEmail(email);
-        log.info("MemberServiceImpl: getMember...");
-        return result.isPresent() ? entityToDto(result.get()) : null;
+    public void update(MemberDto dto) {
+        Member entity = dtoToEntity(dto);
+        memberRepository.save(entity);
+        log.info("MemberServiceImpl: Member Update...");
     }
+
+//    @Override
+//    public MemberDto getMember(String email) {
+//        Optional<Member> result = memberRepository.findByEmailAndSocialType(email);
+//        log.info("MemberServiceImpl: getMember...");
+//        return result.isPresent() ? entityToDto(result.get()) : null;
+//    }
 }

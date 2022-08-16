@@ -1,5 +1,6 @@
-package com.studyLog4u.oauth;
+package com.studyLog4u.security.oauth2;
 
+import com.studyLog4u.security.oauth2.enums.SocialLoginType;
 import org.springframework.core.convert.converter.Converter;
 
 public class SocialLoginTypeConverter implements Converter<String, SocialLoginType>{

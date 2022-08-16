@@ -6,7 +6,9 @@ import com.studyLog4u.entity.Member;
 public interface MemberService {
 
     void join(MemberDto dto);
-    MemberDto getMember(String email);
+
+    void update(MemberDto dto);
+//    MemberDto getMember(String email);
 
     /* DTO to Entity */
     default Member dtoToEntity(MemberDto dto){
@@ -14,6 +16,7 @@ public interface MemberService {
                     .email(dto.getEmail())
                     .nickname(dto.getNickname())
                     .socialType(dto.getSocialType())
+                    .roleType(dto.getRoleType())
                     .build();
         return entity;
     }
@@ -24,6 +27,7 @@ public interface MemberService {
                     .email(entity.getEmail())
                     .nickname(entity.getNickname())
                     .socialType(entity.getSocialType())
+                    .roleType(entity.getRoleType())
                     .build();
         return dto;
     }
