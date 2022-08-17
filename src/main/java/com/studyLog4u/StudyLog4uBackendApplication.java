@@ -1,6 +1,6 @@
 package com.studyLog4u;
 
-import com.studyLog4u.security.oauth2.properties.AppProperties;
+import com.studyLog4u.oauth.config.properties.AppProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
