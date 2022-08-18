@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -107,15 +107,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/api-docs/**").permitAll()
                 .antMatchers("/api/login/auth/**").permitAll()
+                .antMatchers("/oauth2/**", "/login", "/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
                 .authorizationEndpoint()
-                .baseUri("/oauth2/authorization")
+                .baseUri("/oauth2/authorization") // 프론트엔드에서 서버로 인증을 요청할 때 이동할 uri
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
                 .redirectionEndpoint()
-                .baseUri("/*/oauth2/code/*")
+                .baseUri("/oauth2/callback/*") // 승인된 리디렉션 URI
                 .and()
                 .userInfoEndpoint()
                 .userService(oAuth2UserService)
