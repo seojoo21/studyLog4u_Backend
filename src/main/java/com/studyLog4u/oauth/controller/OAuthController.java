@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class OauthController {
+public class OAuthController {
     private final OAuthService oauthService;
 
     @GetMapping("/api/auth/{socialLoginType}")

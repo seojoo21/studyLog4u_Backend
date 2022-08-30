@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class GoogleOAuthRes {
     private String jwtToken;
-    private int user_num;
+    private int userSeq;
     private String accessToken;
     private String tokenType;
 }
