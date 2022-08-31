@@ -3,6 +3,7 @@ package com.studyLog4u.entity;
 import com.studyLog4u.oauth.helper.constants.RoleType;
 import com.studyLog4u.oauth.helper.constants.SocialLoginType;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
@@ -13,17 +14,21 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member extends BaseEntity{
+@Component
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
 
-    @Column(columnDefinition = "varchar2(100)", name="nickname")
-    private String nickname;
-
     @Column(columnDefinition = "varchar2(100)", unique = true)
     private String email;
+
+    @Column(columnDefinition = "varchar2(100)")
+    private String password;
+
+    @Column(columnDefinition = "varchar2(100)")
+    private String nickname;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar2(20)", name="socialtype")

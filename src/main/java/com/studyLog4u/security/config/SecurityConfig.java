@@ -1,4 +1,4 @@
-package com.studyLog4u.config;
+package com.studyLog4u.security.config;
 
 import com.studyLog4u.jwt.JwtSecurityConfig;
 import com.studyLog4u.jwt.JwtTokenService;

@@ -2,6 +2,7 @@ package com.studyLog4u.oauth.controller;
 
 import com.studyLog4u.common.ApiDataResponse;
 import com.studyLog4u.oauth.helper.constants.SocialLoginType;
+import com.studyLog4u.oauth.model.GoogleOAuthRes;
 import com.studyLog4u.oauth.service.impl.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,10 +39,19 @@ public class OAuthController {
 //    }
 
     // 반환 타입 바꾼 코드
+//    @GetMapping("/oauth2/callback/{socialLoginType}")
+//    public ApiDataResponse<String> callback(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType,
+//                                    @RequestParam(name="code") String code){
+//        log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
+//        return new ApiDataResponse<>(oauthService.requestAccessToken(socialLoginType, code));
+//    }
+
+    // 반환 타입 바꾼 코드
     @GetMapping("/oauth2/callback/{socialLoginType}")
     public ApiDataResponse<String> callback(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType,
-                                    @RequestParam(name="code") String code){
+                                    @RequestParam(name="code") String code) throws Exception {
         log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-        return new ApiDataResponse<>(oauthService.requestAccessToken(socialLoginType, code));
+        GoogleOAuthRes googleOAuthRes = oauthService.requestOAuthLogin(socialLoginType, code);
+        return new ApiDataResponse<>(googleOAuthRes);
     }
 }
