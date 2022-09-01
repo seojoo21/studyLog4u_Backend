@@ -1,5 +1,6 @@
 package com.studyLog4u.jwt;
 
+import com.studyLog4u.oauth.helper.constants.RoleType;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,12 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -43,16 +44,17 @@ public class JwtTokenService implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-
     /**
      * JWT 토큰 생성
      * @param authentication
      * @return
      */
     public String createToken(Authentication authentication){
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+//        public String createToken(){
+//        String authorities = authentication.getAuthorities().stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.joining(","));
+        Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()));
 
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidtyInMilliseconds);
@@ -78,10 +80,11 @@ public class JwtTokenService implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+//        Collection<? extends GrantedAuthority> authorities =
+//                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+//                        .map(SimpleGrantedAuthority::new)
+//                        .collect(Collectors.toList());
+        Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()));
 
         User principal = new User(claims.getSubject(), "", authorities);
 

@@ -22,6 +22,9 @@ public class Member {
     private Long userSeq;
 
     @Column(columnDefinition = "varchar2(100)", unique = true)
+    private String userId;
+
+    @Column(columnDefinition = "varchar2(100)", unique = true)
     private String email;
 
     @Column(columnDefinition = "varchar2(100)")

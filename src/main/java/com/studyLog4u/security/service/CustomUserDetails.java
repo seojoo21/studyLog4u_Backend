@@ -16,7 +16,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final String email;
+    private final String userId;
     private final String password;
     private final SocialLoginType socialLoginType;
     private final RoleType roleType;
@@ -59,10 +59,10 @@ public class CustomUserDetails implements UserDetails {
 
     public static CustomUserDetails create(Member member){
         return new CustomUserDetails(
-                member.getEmail(),
+                member.getUserId(),
                 member.getPassword(),
                 member.getSocialType(),
-                RoleType.USER,
+                member.getRoleType(),
                 Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()))
         );
     }

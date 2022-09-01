@@ -3,6 +3,7 @@ package com.studyLog4u.oauth.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.studyLog4u.entity.Member;
 import com.studyLog4u.jwt.JwtTokenService;
+import com.studyLog4u.oauth.helper.constants.RoleType;
 import com.studyLog4u.oauth.helper.constants.SocialLoginType;
 import com.studyLog4u.oauth.model.GoogleOAuthRes;
 import com.studyLog4u.oauth.model.GoogleOAuthToken;
@@ -17,12 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -72,16 +74,23 @@ public class OAuthService {
         //다시 JSON 형식의 응답 객체를 자바 객체로 역직렬화한다.
         GoogleUser googleUser = googleOAuth.getUserInfo(userInfoResponse);
 
-        String userEmail = googleUser.getEmail();
+        String userId = googleUser.getId();
         // 서버와 대조하여 해당 user가 있는지 확인한다.
-        List<Member> list = memberRepository.findByEmail(userEmail);
+        List<Member> list = memberRepository.findByUserId(userId);
 
         if(!list.isEmpty()){
-            //서버에 user가 존재하면 앞으로 회원 인가 처리를 위한 jwtToken을 발급한다.
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getEmail(), member.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, member.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
+            System.out.println("authenticationToken ::" + authenticationToken);
+
+            // 실제로 검증이 이루어지는 부분
+            //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            System.out.println("authentication ::" + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            //서버에 user가 존재하면 앞으로 회원 인가 처리를 위한 jwtToken을 발급한다.
             String jwt = jwtTokenService.createToken(authentication);
+            System.out.println("JWT ::" + jwt);
 
             //액세스 토큰과 jwt 토큰, 이외 정보들이 담긴 자바 객체를 다시 전송한다.
             GoogleOAuthRes googleOAuthRes = new GoogleOAuthRes(jwt, oAuthToken.getAccess_token(), oAuthToken.getToken_type());
@@ -98,4 +107,6 @@ public class OAuthService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
     }
+
+
 }
