@@ -9,11 +9,9 @@ import com.studyLog4u.oauth.model.GoogleOAuthRes;
 import com.studyLog4u.oauth.model.GoogleOAuthToken;
 import com.studyLog4u.oauth.model.GoogleUser;
 import com.studyLog4u.oauth.service.SocialOAuth;
-import com.studyLog4u.oauth.service.impl.GoogleOAuth;
 import com.studyLog4u.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,7 +29,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OAuthService {
 
-    private final Member member;
     private final List<SocialOAuth> socialOauthList;
     private final HttpServletResponse response;
     private final GoogleOAuth googleOAuth;
@@ -40,6 +37,9 @@ public class OAuthService {
     private final JwtTokenService jwtTokenService;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+    @Value("${sns.google.user-password}")
+    private String googlePassword;
 
     public void request(SocialLoginType socialLoginType) {
         SocialOAuth socialOauth = this.findSocialOauthByType(socialLoginType);
@@ -79,11 +79,11 @@ public class OAuthService {
         List<Member> list = memberRepository.findByUserId(userId);
 
         if(!list.isEmpty()){
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, member.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, googlePassword, Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
             System.out.println("authenticationToken ::" + authenticationToken);
 
             // 실제로 검증이 이루어지는 부분
-            //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
+            // authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
             System.out.println("authentication ::" + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);

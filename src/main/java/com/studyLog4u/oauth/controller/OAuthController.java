@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OAuthController {
     private final OAuthService oauthService;
 
+
     @GetMapping("/api/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType){
         log.info("OauthController 사용자로부터 소셜 로그인 요청 받음 :: {}", socialLoginType);

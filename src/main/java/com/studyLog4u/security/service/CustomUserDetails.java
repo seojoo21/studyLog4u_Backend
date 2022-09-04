@@ -19,7 +19,6 @@ public class CustomUserDetails implements UserDetails {
     private final String userId;
     private final String password;
     private final SocialLoginType socialLoginType;
-    private final RoleType roleType;
     private final Collection<GrantedAuthority> authorities;
 
     @Override
@@ -29,13 +28,11 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
-    public String getUsername() {
-        return null;
-    }
+    public String getUsername() { return userId; }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -62,7 +59,6 @@ public class CustomUserDetails implements UserDetails {
                 member.getUserId(),
                 member.getPassword(),
                 member.getSocialType(),
-                member.getRoleType(),
                 Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()))
         );
     }
