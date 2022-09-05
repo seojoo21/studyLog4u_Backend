@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 권한 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**").permitAll()
+                .antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**", "/favicon.ico").permitAll()
                 .antMatchers("/api/auth/**", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

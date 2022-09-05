@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class OAuthController {
     private final OAuthService oauthService;
-
 
     @GetMapping("/api/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType){
@@ -31,28 +31,11 @@ public class OAuthController {
      * @return SNS Login 요청 결과로 받은 Json 형태의 String 문자열 (access_token, refresh_token 등)
      */
 
-    // 오리지널 코드
-//    @GetMapping("/oauth2/callback/{socialLoginType}")
-//    public String callback(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType,
-//                           @RequestParam(name="code") String code){
-//        log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-//        return oauthService.requestAccessToken(socialLoginType, code);
-//    }
-
-    // 반환 타입 바꾼 코드
-//    @GetMapping("/oauth2/callback/{socialLoginType}")
-//    public ApiDataResponse<String> callback(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType,
-//                                    @RequestParam(name="code") String code){
-//        log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-//        return new ApiDataResponse<>(oauthService.requestAccessToken(socialLoginType, code));
-//    }
-
-    // 반환 타입 바꾼 코드
     @GetMapping("/oauth2/callback/{socialLoginType}")
     public ApiDataResponse<String> callback(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType,
-                                    @RequestParam(name="code") String code) throws Exception {
+                                            @RequestParam(name="code") String code, HttpServletRequest request) throws Exception {
         log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-        GoogleOAuthRes googleOAuthRes = oauthService.requestOAuthLogin(socialLoginType, code);
+        GoogleOAuthRes googleOAuthRes = oauthService.requestOAuthLogin(socialLoginType, code, request);
         return new ApiDataResponse<>(googleOAuthRes);
     }
 }

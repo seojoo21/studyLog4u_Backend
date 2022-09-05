@@ -15,11 +15,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -50,14 +48,10 @@ public class JwtTokenService implements InitializingBean {
      * @return
      */
     public String createToken(Authentication authentication){
-//        public String createToken(){
-//        String authorities = authentication.getAuthorities().stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.joining(","));
         Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()));
 
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidtyInMilliseconds);
+        Date validity = new Date();
+        validity.setTime(Long.parseLong(validity.getTime()+tokenValidtyInMilliseconds));
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
@@ -80,12 +74,7 @@ public class JwtTokenService implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-//        Collection<? extends GrantedAuthority> authorities =
-//                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-//                        .map(SimpleGrantedAuthority::new)
-//                        .collect(Collectors.toList());
         Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()));
-
         User principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);

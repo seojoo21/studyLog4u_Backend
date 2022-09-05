@@ -20,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
@@ -51,20 +52,12 @@ public class OAuthService {
         }
     }
 
-    // 오리지널 코드
-//    public String requestAccessToken(SocialLoginType socialLoginType, String code) {
-//        SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
-//        return socialOauth.requestAccessToken(code);
-//    }
-
-    // 반환 타입 바꾼 코드
     public ResponseEntity<String> requestAccessToken(SocialLoginType socialLoginType, String code) {
         SocialOAuth socialOAuth = this.findSocialOauthByType(socialLoginType);
         return socialOAuth.requestAccessToken(code);
     }
 
-    // 수정
-    public GoogleOAuthRes requestOAuthLogin(SocialLoginType socialLoginType, String code) throws Exception {
+    public GoogleOAuthRes requestOAuthLogin(SocialLoginType socialLoginType, String code, HttpServletRequest request) throws Exception {
         //구글로 일회성 코드를 보내 액세스 토큰이 담긴 응답객체를 받아옴
         ResponseEntity<String> accessTokenResponse = this.requestAccessToken(socialLoginType, code);
         //응답 객체가 JSON 형식으로 되어 있으므로, 이를 역직렬화해서 자바 객체에 담을 것이다.
@@ -80,6 +73,7 @@ public class OAuthService {
 
         if(!list.isEmpty()){
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, googlePassword, Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
+//            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             System.out.println("authenticationToken ::" + authenticationToken);
 
             // 실제로 검증이 이루어지는 부분
@@ -107,6 +101,4 @@ public class OAuthService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
     }
-
-
 }
