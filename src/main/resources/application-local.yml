@@ -57,6 +57,10 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
+app:
+  oauth2:
+    authorizedRedirectUris: http://localhost:3000/oauth2/redirect
+
 #app:
 #  auth:
 #    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC

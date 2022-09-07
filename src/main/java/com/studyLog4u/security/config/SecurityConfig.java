@@ -30,12 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        super.configure(http);
-//        http.authorizeRequests()
-//                .antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**").permitAll()
-//                .antMatchers("/api/auth/**", "/oauth2/**").permitAll()
-//                .anyRequest().authenticated();
-
         http
                 // CORS 허용 & JWT 토큰을 사용하므로 csrf disabled
                 .cors().and()

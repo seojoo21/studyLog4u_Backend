@@ -1,6 +1,5 @@
 package com.studyLog4u.oauth.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.studyLog4u.entity.Member;
 import com.studyLog4u.jwt.JwtTokenService;
 import com.studyLog4u.oauth.helper.constants.RoleType;
@@ -73,7 +72,6 @@ public class OAuthService {
 
         if(!list.isEmpty()){
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, googlePassword, Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
-//            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             System.out.println("authenticationToken ::" + authenticationToken);
 
             // 실제로 검증이 이루어지는 부분

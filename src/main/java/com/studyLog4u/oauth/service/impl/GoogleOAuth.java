@@ -35,6 +35,11 @@ public class GoogleOAuth implements SocialOAuth {
     @Value("${sns.google.userinfo-request-url}")
     private String GOOGLE_SNS_USERINFO_REQUEST_URL;
 
+    /**
+     * https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code
+     * &client_id="할당받은 id"&redirect_uri="access token 처리"로 Redirect URL을 생성
+     * @return redirectUrl
+     */
     @Override
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
@@ -53,28 +58,11 @@ public class GoogleOAuth implements SocialOAuth {
         return redirectUrl;
     }
 
-    // 오리지널 코드
-//    @Override
-//    public String requestAccessToken(String code) {
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("code", code);
-//        params.put("client_id", GOOGLE_SNS_CLIENT_ID);
-//        params.put("client_secret", GOOGLE_SNS_CLIENT_SECRET);
-//        params.put("redirect_uri", GOOGLE_SNS_REDIRECT_URI);
-//        params.put("grant_type", "authorization_code");
-//
-//        ResponseEntity<String> responseEntity =
-//                restTemplate.postForEntity(GOOGLE_SNS_TOKEN_BASE_URL, params, String.class);
-//
-//        if(responseEntity.getStatusCode() == HttpStatus.OK) {
-//            return responseEntity.getBody();
-//        }
-//        return "구글 로그인 요청 처리 실패";
-//    }
-
-    // 반환 타입 바꾼 코드
+    /**
+     * 구글로 일회성 코드를 보내 액세스 토큰이 담긴 응답 객체를 받아옴
+     * @param code API Server 에서 받아온 code
+     * @return
+     */
     @Override
     public ResponseEntity<String> requestAccessToken(String code) {
         RestTemplate restTemplate = new RestTemplate();

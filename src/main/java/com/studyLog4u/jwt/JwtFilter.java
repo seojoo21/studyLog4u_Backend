@@ -3,7 +3,6 @@ package com.studyLog4u.jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -30,6 +29,7 @@ public class JwtFilter extends GenericFilterBean {
      */
     private String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
@@ -51,6 +51,8 @@ public class JwtFilter extends GenericFilterBean {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String jwt = resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
+
+        System.out.println("doFilter jwt :: " + jwt);
 
         if(StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)){
             Authentication authentication = jwtTokenService.getAuthentication(jwt);
