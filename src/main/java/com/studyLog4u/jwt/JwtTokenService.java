@@ -92,7 +92,7 @@ public class JwtTokenService implements InitializingBean {
                     .build()
                     .parseClaimsJws(token)
                     .getBody().getSubject();
-            log.info("JWT 토큰 확인되었습니다. 회원 email ::" + getClaim);
+            log.info("JWT 토큰 확인되었습니다. 회원 user_id ::" + getClaim);
             return true;
         }catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
             log.error("잘못된 JWT 서명입니다.");

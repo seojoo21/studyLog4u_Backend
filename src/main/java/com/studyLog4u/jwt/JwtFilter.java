@@ -29,6 +29,7 @@ public class JwtFilter extends GenericFilterBean {
      */
     private String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        log.info("bearerToken :: " + bearerToken);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
@@ -52,7 +53,7 @@ public class JwtFilter extends GenericFilterBean {
         String jwt = resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
 
-        System.out.println("doFilter jwt :: " + jwt);
+        log.debug("doFilter jwt :: " + jwt);
 
         if(StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)){
             Authentication authentication = jwtTokenService.getAuthentication(jwt);
