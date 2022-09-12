@@ -10,6 +10,7 @@ import com.studyLog4u.oauth.model.GoogleUser;
 import com.studyLog4u.oauth.service.SocialOAuth;
 import com.studyLog4u.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OAuthService {
@@ -72,17 +74,17 @@ public class OAuthService {
 
         if(!list.isEmpty()){
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, googlePassword, Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode())));
-            System.out.println("authenticationToken ::" + authenticationToken);
+            log.debug("authenticationToken ::" + authenticationToken);
 
             // 실제로 검증이 이루어지는 부분
             // authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-            System.out.println("authentication ::" + authentication);
+            log.debug("authentication ::" + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             //서버에 user가 존재하면 앞으로 회원 인가 처리를 위한 jwtToken을 발급한다.
             String jwt = jwtTokenService.createToken(authentication);
-            System.out.println("JWT ::" + jwt);
+            log.debug("JWT ::" + jwt);
 
             //액세스 토큰과 jwt 토큰, 이외 정보들이 담긴 자바 객체를 다시 전송한다.
             GoogleOAuthRes googleOAuthRes = new GoogleOAuthRes(jwt, oAuthToken.getAccess_token(), oAuthToken.getToken_type());

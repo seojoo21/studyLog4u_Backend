@@ -1,9 +1,10 @@
 package com.studyLog4u.oauth.controller;
 
-import com.studyLog4u.common.ApiDataResponse;
+import com.studyLog4u.common.ApiDocumentResponse;
 import com.studyLog4u.oauth.helper.constants.SocialLoginType;
 import com.studyLog4u.oauth.model.GoogleOAuthRes;
 import com.studyLog4u.oauth.service.impl.OAuthService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,13 @@ public class OAuthController {
     @Value("${app.oauth2.authorizedRedirectUris}")
     private String REDIRECT_URL;
 
-    @GetMapping("/api/auth/{socialLoginType}")
+    /**
+     * 소셜 로그인 요청 처리
+     * @param socialLoginType google, facebook,.....
+     */
+    @ApiDocumentResponse
+    @Operation(summary = "소셜 로그인 요청", description = "소셜 로그인 요청 API 입니다.\n\n")
+    @GetMapping("/api/oauth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType){
         log.info("OauthController 사용자로부터 소셜 로그인 요청 받음 :: {}", socialLoginType);
         oauthService.request(socialLoginType);
