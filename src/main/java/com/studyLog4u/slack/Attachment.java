@@ -1,4 +1,4 @@
-package com.studyLog4u.utils.slack;
+package com.studyLog4u.slack;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,27 +8,20 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "channel",
-        "blocks"
+        "pretext",
+        "text"
 })
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Message {
+public class Attachment {
 
-    @JsonProperty("channel")
-    private String channel;
+    @JsonProperty("pretext")
+    public final String pretext = "";
 
     @JsonProperty("text")
-    private String text;
-
-    @JsonProperty("attachments")
-    @Builder.Default
-    public List<Attachment> attachments = new ArrayList<>();
+    public String text;
 }

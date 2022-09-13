@@ -20,6 +20,8 @@ public interface StudyService {
                     .title(dto.getTitle())
                     .content(dto.getContent())
                     .notiDate(dto.getNotiDate())
+                    .nickname(dto.getNickname())
+                    .userId(dto.getUserId())
                     .build();
         return entity;
     }
@@ -34,6 +36,8 @@ public interface StudyService {
                     .regDate(entity.getRegDate())
                     .modDate(entity.getModDate())
                     .notiDate(entity.getNotiDate())
+                    .nickname(entity.getNickname())
+                    .userId(entity.getUserId())
                     .build();
         return dto;
     }

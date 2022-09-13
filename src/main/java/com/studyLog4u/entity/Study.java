@@ -25,6 +25,12 @@ public class Study extends BaseEntity {
     @Column(name="notidate")
     private LocalDateTime notiDate;
 
+    @Column(columnDefinition = "varchar2(100)")
+    private String userId;
+
+    @Column(columnDefinition = "varchar2(100)")
+    private String nickname;
+
     /* 수정 메서드 */
     public void changeCategory(String category){
         this.category = category;

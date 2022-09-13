@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,11 +62,17 @@ public class OAuthController {
         log.info("OauthController 소셜 로그인 API 서버로부터 받은 code :: {}", code);
         GoogleOAuthRes googleOAuthRes = oauthService.requestOAuthLogin(socialLoginType, code, request);
         String jwtToken = googleOAuthRes.getJwtToken();
+        String memberName = StringUtils.deleteWhitespace(googleOAuthRes.getMemberName());
 
         Cookie cookie = new Cookie("jwtToken", jwtToken);
         cookie.setMaxAge(86400);
         cookie.setPath("/");
         response.addCookie(cookie);
+
+        Cookie cookie1 = new Cookie("memberName", memberName);
+        cookie1.setMaxAge(86400);
+        cookie1.setPath("/");
+        response.addCookie(cookie1);
 
         response.sendRedirect(REDIRECT_URL);
     }
