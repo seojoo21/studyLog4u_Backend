@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface StudyRepository extends JpaRepository<Study, Long>, QuerydslPredicateExecutor<Study> {
 
-    List<Study> findAllByNotiDate(Timestamp date);
+    List<Study> findAllByNotiDate(LocalDateTime date);
 }

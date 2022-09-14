@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Date;
 @Slf4j
@@ -21,11 +22,12 @@ public class SlackBotScheduler {
     private final SlackBotService slackBotService;
     private final StudyRepository studyRepository;
 
-    @Scheduled(cron = "0 * * * * *")
+//    @Scheduled(cron = "0 0 20 * * *") // 매일 오후 8시마다
+    @Scheduled(cron = "0 * * * * *") // 테스트용 매분 0초마다
     public void setNotificationSchedule() {
         log.info("Quartz Schedule Task Run......");
-//        System.out.println("notiDate :: " + notiDate);
-//        List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
-//        studyList.forEach(slackBotService::setScheduleMessage);
+        LocalDateTime notiDate = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
+        List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
+        studyList.forEach(slackBotService::setScheduleMessage);
     }
 }

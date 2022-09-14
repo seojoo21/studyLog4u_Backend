@@ -54,13 +54,11 @@ public class SlackBotService {
 
     public String getSlackChannelId(Study study) {
         String nickname = StringUtils.lowerCase(study.getNickname());
-        // String nickname = StringUtils.lowerCase("JuyoungKang");
         String slackChannelId = "";
         var client = Slack.getInstance().methods();
 
         try {
             var result = client.conversationsList(r->r.token(slackToken));
-            // var result = client.conversationsList(r->r.token("xoxb-3881526322720-3863040353715-Y0LgjRd3biDvaimjI9L4M6lS"));
             saveConversations(result.getChannels());
             if (conversationsStore.get(nickname) != null) {
                 slackChannelId = conversationsStore.get(nickname);
