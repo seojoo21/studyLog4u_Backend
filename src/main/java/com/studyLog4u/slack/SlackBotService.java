@@ -1,36 +1,41 @@
 package com.studyLog4u.slack;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.studyLog4u.entity.Member;
+import com.slack.api.Slack;
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.model.Conversation;
 import com.studyLog4u.entity.Study;
+import com.studyLog4u.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class SlackBotService {
 
-    private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
-
     @Value("${app.slack.token}")
     private String slackToken;
 
-    @Value("${app.slack.channel-id}")
-    private String slackChannelId;
+    private final ConcurrentMap<String, String> conversationsStore = new ConcurrentHashMap<>();
 
-    public void setNotification(Study study){
+    public void setScheduleMessage(Study study) {
         String url = "https://slack.com/api/chat.postMessage";
         String studyTitle = study.getTitle();
+        String slackChannelId = getSlackChannelId(study);
+        log.info("slackChannelId :: " + slackChannelId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + slackToken);
@@ -41,31 +46,35 @@ public class SlackBotService {
                 .text(studyTitle + "을/를 복습할 시간입니다.")
                 .build();
 
+        RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Message> requestEntity = new HttpEntity<>(message, headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         log.info("SlackBotService Response :: " + responseEntity.getBody());
     }
 
-//    public String getSlackChannelIdByEmail(String email){
-//        String url = "https://slack.com/api/users.lookupByEmail";
-//        url += "?email=" + email;
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", "Bearer " + slackToken);
-//        headers.add("Content-Type", "application/x-www-form-urlencoded");
-//
-//        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-//        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
-//
-//        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-//            try{
-//                JsonNode body = objectMapper.readTree(responseEntity.getBody());
-//                return body.get("user").get("id").textValue(); // C03RDJ58082
-//            } catch (JsonProcessingException e) {
-//                log.error("Json Parsing 에러입니다.");
-//                throw new RuntimeException();
-//            }
-//        }
-//        return null;
-//    }
+    public String getSlackChannelId(Study study) {
+        String nickname = StringUtils.lowerCase(study.getNickname());
+        // String nickname = StringUtils.lowerCase("JuyoungKang");
+        String slackChannelId = "";
+        var client = Slack.getInstance().methods();
+
+        try {
+            var result = client.conversationsList(r->r.token(slackToken));
+            // var result = client.conversationsList(r->r.token("xoxb-3881526322720-3863040353715-Y0LgjRd3biDvaimjI9L4M6lS"));
+            saveConversations(result.getChannels());
+            if (conversationsStore.get(nickname) != null) {
+                slackChannelId = conversationsStore.get(nickname);
+            }
+        } catch(IOException | SlackApiException e){
+            log.error("슬랙 API 호출 중 에러가 발생했습니다. " + e);
+        }
+        return slackChannelId;
+    }
+
+    public void saveConversations(List<Conversation> conversations) {
+        for (Conversation conversation : conversations) {
+            conversationsStore.put(conversation.getName(), conversation.getId());
+        }
+    }
+
 }
