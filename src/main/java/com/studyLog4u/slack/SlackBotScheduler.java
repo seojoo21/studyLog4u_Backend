@@ -22,12 +22,17 @@ public class SlackBotScheduler {
     private final SlackBotService slackBotService;
     private final StudyRepository studyRepository;
 
-//    @Scheduled(cron = "0 0 20 * * *") // 매일 오후 8시마다
-    @Scheduled(cron = "0 * * * * *") // 테스트용 매분 0초마다
+    @Scheduled(cron = "0 0 20 * * *") // 매일 오후 8시마다
     public void setNotificationSchedule() {
-        log.info("Quartz Schedule Task Run......");
-        LocalDateTime notiDate = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
+        log.info("Quartz Schedule Task Run Start...");
+        LocalDateTime notiDate = LocalDate.now().atTime(0,0);
+
         List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
+        log.info("===========StudyList=================");
+        studyList.forEach( study -> System.out.println(study));
+        log.info("===========StudyList=================");
+
         studyList.forEach(slackBotService::setScheduleMessage);
+        log.info("Quartz Schedule Task Run Finish...");
     }
 }

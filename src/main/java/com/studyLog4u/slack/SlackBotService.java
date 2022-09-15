@@ -29,6 +29,9 @@ public class SlackBotService {
     @Value("${app.slack.token}")
     private String slackToken;
 
+    @Value("${app.client.url}")
+    private String clientUrl;
+
     private final ConcurrentMap<String, String> conversationsStore = new ConcurrentHashMap<>();
 
     public void setScheduleMessage(Study study) {
@@ -43,7 +46,10 @@ public class SlackBotService {
 
         Message message = Message.builder()
                 .channel(slackChannelId)
-                .text(studyTitle + "을/를 복습할 시간입니다.")
+                .text("["+studyTitle+"]"+"을/를 복습할 시간입니다.")
+                .attachments(List.of(Attachment.builder()
+                        .text("복습하러 가기 >> " + clientUrl +"/study/"+study.getId())
+                        .build()))
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();

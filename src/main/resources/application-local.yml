@@ -1,7 +1,3 @@
-# Local server
-server:
-  port: 9091
-
 spring:
   config:
     activate:
@@ -36,9 +32,6 @@ spring:
       name: user
       password: 1234
 
-#  main:
-#    allow-bean-definition-overriding: true
-
 #API Document
 springdoc:
   swagger-ui:
@@ -60,6 +53,10 @@ jasypt:
 app:
   oauth2:
     authorizedRedirectUris: http://localhost:3000/oauth2/redirect
+  client:
+    url: http://localhost:3000
+  slack:
+    token: ENC(YRQMci9lJSad4DQ3QrpfEjhcVdMuJmoO+n1/Lvcvd47Q/Cq+X0hEoaq3f6u9KIqwj+pHJnXyfu6VqxyHJXCoC+tXbLIyFMAC)
 
 #app:
 #  auth:
