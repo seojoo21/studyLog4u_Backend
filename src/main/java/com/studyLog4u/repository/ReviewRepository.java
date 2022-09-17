@@ -2,6 +2,7 @@ package com.studyLog4u.repository;
 
 import com.studyLog4u.entity.Review;
 import com.studyLog4u.entity.Study;
+import jdk.jfr.Registered;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

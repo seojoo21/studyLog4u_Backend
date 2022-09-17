@@ -26,18 +26,16 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-@Slf4j
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OAuthService {
 
     private final List<SocialOAuth> socialOauthList;
     private final HttpServletResponse response;
     private final GoogleOAuth googleOAuth;
-
     private final MemberRepository memberRepository;
     private final JwtTokenService jwtTokenService;
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Value("${sns.google.user-password}")

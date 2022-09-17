@@ -11,6 +11,8 @@ import com.studyLog4u.repository.StudyRepository;
 import com.studyLog4u.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,9 +24,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class StudyServiceImpl implements StudyService {
+
     private final StudyRepository studyRepository;
     private final ReviewRepository reviewRepository;
 

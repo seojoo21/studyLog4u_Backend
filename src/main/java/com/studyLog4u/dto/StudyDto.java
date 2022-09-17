@@ -1,6 +1,5 @@
 package com.studyLog4u.dto;
 
-import com.studyLog4u.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

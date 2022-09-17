@@ -1,6 +1,5 @@
 package com.studyLog4u.service.Impl;
 
-import com.studyLog4u.dto.PageResultDto;
 import com.studyLog4u.dto.ReviewDto;
 import com.studyLog4u.entity.Review;
 import com.studyLog4u.entity.Study;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ReviewServiceImpl implements ReviewService {
 
-    private final ReviewRepository reviewRepository;
+    private ReviewRepository reviewRepository;
 
     @Override
     public Long register(ReviewDto dto) {
@@ -52,5 +51,9 @@ public class ReviewServiceImpl implements ReviewService {
         Review entity = dtoToEntity(dto);
         reviewRepository.save(entity);
         log.info("ReviewServiceImpl: update...");
+    }
+
+    public void setReviewRepository(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
     }
 }

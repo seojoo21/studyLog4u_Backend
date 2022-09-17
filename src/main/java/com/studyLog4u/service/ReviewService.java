@@ -1,6 +1,5 @@
 package com.studyLog4u.service;
 
-import com.studyLog4u.dto.PageResultDto;
 import com.studyLog4u.dto.ReviewDto;
 import com.studyLog4u.entity.Review;
 import com.studyLog4u.entity.Study;

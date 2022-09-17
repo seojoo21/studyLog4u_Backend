@@ -4,7 +4,6 @@ import com.slack.api.Slack;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.model.Conversation;
 import com.studyLog4u.entity.Study;
-import com.studyLog4u.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

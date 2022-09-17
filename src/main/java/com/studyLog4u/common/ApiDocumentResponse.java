@@ -1,6 +1,5 @@
 package com.studyLog4u.common;
 
-import com.studyLog4u.common.ApiDataResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
