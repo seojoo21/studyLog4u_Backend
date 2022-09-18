@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableJpaAuditing
 @EnableScheduling
-// @EnableJpaRepositories(basePackages = {"com.studyLog4u.repository"})
 @SpringBootApplication()
 public class StudyLog4uBackendApplication {
 

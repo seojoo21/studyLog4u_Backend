@@ -1,7 +1,7 @@
 server:
-  port: 8080 #local: 9091
+  port: 9091
 
 spring:
   profiles:
     include: oauth
-    default: local #기본 환경을 local로
+    default: dev #local, dev
