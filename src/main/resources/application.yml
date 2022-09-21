@@ -4,4 +4,4 @@ server:
 spring:
   profiles:
     include: oauth
-    default: dev #local, dev
+    active: prod #prod or local

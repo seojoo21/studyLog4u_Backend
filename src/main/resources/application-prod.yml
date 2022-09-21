@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: dev # 환경 이름 설정
+      on-profile: prod # 환경 이름 설정
 
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
