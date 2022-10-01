@@ -41,5 +41,3 @@ src/main/resources/oracleWallet
 logs/
 #application-oauth.yml
 /build/libs/
-/build/libs/
-/build/
