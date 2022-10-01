@@ -1,7 +1,6 @@
 HELP.md
 .gradle
 build/
-!build/libs/studyLog4u_backend-0.0.1-SNAPSHOT.jar
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -41,3 +40,6 @@ out/
 src/main/resources/oracleWallet
 logs/
 #application-oauth.yml
+/build/libs/
+/build/libs/
+/build/
