@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Long register(ReviewDto dto) {
@@ -51,9 +51,5 @@ public class ReviewServiceImpl implements ReviewService {
         Review entity = dtoToEntity(dto);
         reviewRepository.save(entity);
         log.info("ReviewServiceImpl: update...");
-    }
-
-    public void setReviewRepository(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
     }
 }
