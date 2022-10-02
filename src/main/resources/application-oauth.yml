@@ -4,7 +4,7 @@ sns:
     client-id: ENC(OvplBtCjkTU/whMpok/kj0Mm304kDY8o5NxJJwY97Wev6ztDoZ87tHVkLjT8Mfea1BVgJY07PP3Or31KgF+uh92C1J3js0WiiK1HdOWYWyhiLOE+bF0Q6Q==)
     client-secret: ENC(j2dpXIZbcTXE9VcrejFueRpPGPlIz0TsCIJwoH/9skOGZqvwyh5PPBDhEE2pBHJ+)
     #redirect-uri: http://localhost:9091/oauth2/callback/google #local
-    redirect-uri: http://studylog4u.xyz:9091/oauth2/callback/google
+    redirect-uri: http://www.studylog4u.xyz:9091/oauth2/callback/google
     token-base-url: https://oauth2.googleapis.com/token
     userinfo-request-url: https://www.googleapis.com/oauth2/v1/userinfo
     user-password: ENC(T8vIJalbw6Rfl4rQAHWShw==)

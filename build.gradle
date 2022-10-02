@@ -118,11 +118,11 @@ jar {
     enabled = false // plain.jar 생성하지 않는다.
 }
 
-bootJar {
-    mainClass = 'com.studyLog4u.StudyLog4uBackendApplication'
-}
-
-bootRun {
-    String activeProfile = System.properties['spring.profiles.active']
-    systemProperty "spring.profiles.active", activeProfile
-}
+//bootJar {
+//    mainClass = 'com.studyLog4u.StudyLog4uBackendApplication'
+//}
+//
+//bootRun {
+//    String activeProfile = System.properties['spring.profiles.active']
+//    systemProperty "spring.profiles.active", activeProfile
+//}
