@@ -5,7 +5,7 @@ spring:
 
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@studyLog4u_high?TNS_ADMIN=/home/ubuntu/studylog4u_server/Wallet_studyLog4u
+    url: ENC(U8ZPcC4nPVIJh/OvCZlnGbdeaxRdKZl2hTpfd+nQCXBvOsHqck/k9At6lLwqxUY1W2Kce7w2WN6g2rVQEIeb1XbHi+YPVZF0LQVhVF3tAf4plA+s6NK9D8KvvEP+2kOolEOC0Z94Qy4=)
     username: ENC(f3sdCTIXOb1crVjmI0tmZA==)
     password: ENC(5sBpAu95kyyPUZ4ThXHYhjfVOL2swK8h)
 
