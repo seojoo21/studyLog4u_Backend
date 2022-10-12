@@ -5,9 +5,9 @@ spring:
 
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: ENC(v+lq+C25uMuPxdEg6vxydI1CGIjUsGA9O3LEmIeYggN5uT+9sZRtHeBpEo9aeTee2RBClCBlOq8CxsO0s+J26V+50HGhSwGDmuf1DeZNbChaAvW2zwGiLQlnR4TGzvn30w/p5sdZj8k=)
-    username: ENC(f3sdCTIXOb1crVjmI0tmZA==)
-    password: ENC(5sBpAu95kyyPUZ4ThXHYhjfVOL2swK8h)
+    url: ENC(SM2SX86yFuXBR2xw8P0EfhmNTiXLP29JZWVKpfJv5zBGVknBVfRNYNR0VBoP9iL3)
+    username: ENC(CpCbsQu6fcwZCobic6W+vA==)
+    password: ENC(/51HnqYXmorh8LyUlBHVcA==)
 
   jpa:
     hibernate:

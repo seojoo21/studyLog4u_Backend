@@ -76,7 +76,6 @@ dependencies {
     /* Quartz */
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
 
-    implementation 'org.springframework.boot:spring-boot-starter-parent:2.7.3'
 }
 
 tasks.named('test') {
