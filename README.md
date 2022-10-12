@@ -33,3 +33,7 @@
 ## BackEnd Release Note
 #### 2022.10.02 Version 1.0
 - 1차 개발 완료 후 AWS Lightsail 서버 반영 완료. 서비스 시작 
+
+#### 2022.10.12 Version 1.1
+- 로컬테스트 DB, 운영 DB 분리
+- WebConfig 수정 
