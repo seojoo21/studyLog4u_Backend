@@ -7,7 +7,7 @@
 
 ## 2. studyLog4u 프로젝트 주요 목표
 1. 백엔드와 프론트엔드의 분리
-- 백엔드는 RESTful API로서의 기능에 집중하고, 프론트엔드는 API 요청으로 가져온 데이터를 화면에 구현하는 기눙에 집중하도록 백엔드는 Springboot, 프론트엔드는 React.js로 분리하여 구현하였습니다.
+- 백엔드는 RESTful API로서의 기능에 집중하고, 프론트엔드는 API 요청으로 가져온 데이터를 화면에 구현하는 기능에 집중하도록 백엔드는 Springboot, 프론트엔드는 React.js로 분리하여 구현하였습니다.
 
     - 백엔드: Springboot + JPA + RESTful API
         - RESTful API 개념 및 활용에 익숙해지기 위해 Spring REST Docs를 적용하였습니다.
@@ -37,3 +37,8 @@
 #### 2022.10.12 Version 1.1
 - 로컬테스트 DB, 운영 DB 분리
 - WebConfig 수정 
+
+#### 2022.10.22 서버 패치
+- Swap memory 추가 설정 
+- Jenkins Github 연동 및 CI/CD 구축
+  <img width="994" alt="스크린샷 2022-10-22 오전 12 10 14" src="https://user-images.githubusercontent.com/98722435/197228962-34803c73-e726-463b-a85b-80ff55c9581b.png">
