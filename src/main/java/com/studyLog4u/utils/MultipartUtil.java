@@ -4,11 +4,12 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class MultipartUtil {
-    private static final String BASE_DIR = "images";
+    private static final String IMG_ROOT_DIR = "images";
 
     /**
      * 로컬 또는 서비스가 구동되는 서버에서의 사용자 홈 디렉터리 경로 반환
@@ -46,30 +47,31 @@ public class MultipartUtil {
      * @return
      */
     public static String createPath(String fileId, String format){
+        LocalDate date = LocalDate.now();
+        int monthValue = date.getMonthValue();
+        int dayValue = date.getDayOfMonth();
 
-        File pathDirectory = new File(getLocalHomeDirectory(), BASE_DIR);
+        String yyyy = String.valueOf(date.getYear());
+        String MM = monthValue < 10 ? "0"+String.valueOf(monthValue) : String.valueOf(monthValue);
+        String dd = dayValue  < 10 ? "0"+String.valueOf(dayValue) : String.valueOf(dayValue);
+        String base_dir = IMG_ROOT_DIR + File.separator + yyyy + File.separator + MM + File.separator + dd + File.separator + fileId + "." + format;
+
+        File pathDirectory = new File(getLocalHomeDirectory(), base_dir);
         if(!pathDirectory.exists()) {
             pathDirectory.mkdirs();
         }
 
-//        String path = createDirName();
-//        File pathDirectory = new File(getLocalHomeDirectory(), path);
-//
-//        if(!pathDirectory.exists()) {
-//            pathDirectory.mkdirs();
-//        }
-
-        return String.format("%s/%s.%s", BASE_DIR, fileId, format);
+        return base_dir;
     }
 
-    /**
-     * 파일이 저장될 디렉토리의 이름을 생성해주는 클래스
-     * 연/월/일 디렉토리를 만들고자 오늘 날짜의 경로를 문자열로 반환해줌
-     * @return
-     */
-//    private static String createDirName(){
-//        LocalDate date = LocalDate.now();
-//        String stringDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//        return stringDate.replace("-", File.separator);
-//    }
+    public static String getDomain(){
+        String domain = "";
+
+        Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-prod.yml");
+        LinkedHashMap<String, Object> cloudMap = (LinkedHashMap<String, Object>) ymlMap.get("cloud");
+        LinkedHashMap<String, Object> awsMap= (LinkedHashMap<String, Object>) cloudMap.get("aws");
+        domain = (String) awsMap.get("bucket-domain");
+
+        return domain;
+    }
 }
