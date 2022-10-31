@@ -29,6 +29,11 @@ public class ConfigValueLoader {
         return properties ;
     }
 
+    /**
+     * .yml files value loader
+     * @param resourceFileName
+     * @return
+     */
     public static Map loadYml(String resourceFileName) {
         Yaml yaml = new Yaml();
         InputStream inputStream = yaml.getClass()

@@ -43,4 +43,5 @@ public class FileController {
     public ApiDataResponse<FileDetailDto> uploadFile(@RequestParam("image") MultipartFile multipartFile){
         return new ApiDataResponse<>(fileUploadService.save(multipartFile));
     }
+
 }

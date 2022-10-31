@@ -1,6 +1,6 @@
 package com.studyLog4u.dto;
 
-import com.studyLog4u.utils.MultipartUtil;
+import com.studyLog4u.utils.MultipartFileUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,15 +25,15 @@ public class FileDetailDto {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public static FileDetailDto multipartOf(MultipartFile multipartFile){
-        final String fileId = MultipartUtil.createFileId();
-        final String format = MultipartUtil.getFormat(multipartFile.getContentType());
-        final String domain = MultipartUtil.getDomain();
+        final String fileId = MultipartFileUtil.createFileId();
+        final String format = MultipartFileUtil.getFormat(multipartFile.getContentType());
+        final String domain = MultipartFileUtil.getDomain();
         return FileDetailDto.builder()
                 .id(fileId)
                 .name(multipartFile.getOriginalFilename())
                 .format(format)
                 .domain(domain)
-                .path(MultipartUtil.createPath(fileId,format))
+                .path(MultipartFileUtil.createPath(fileId,format))
                 .bytes(multipartFile.getSize())
                 .build();
     }

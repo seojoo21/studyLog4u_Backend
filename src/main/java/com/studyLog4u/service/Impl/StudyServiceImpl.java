@@ -6,20 +6,28 @@ import com.studyLog4u.dto.PageResultDto;
 import com.studyLog4u.dto.StudyDto;
 import com.studyLog4u.entity.QStudy;
 import com.studyLog4u.entity.Study;
+import com.studyLog4u.repository.FileMngRepository;
 import com.studyLog4u.repository.ReviewRepository;
 import com.studyLog4u.repository.StudyRepository;
 import com.studyLog4u.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -31,15 +39,36 @@ public class StudyServiceImpl implements StudyService {
     private final StudyRepository studyRepository;
     private final ReviewRepository reviewRepository;
 
+    private final FileMngRepository fileMngRepository;
+
     @Override
     public Long register(StudyDto dto){
         // pk id 값 설정
         Long id = Long.valueOf(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         dto.setId(id);
 
+        // 신규 스터디 등록
         Study entity = dtoToEntity(dto);
         studyRepository.save(entity);
+
+        Parser parser = Parser.builder().build();
+        Node markDownDocument = parser.parse(dto.getContent());
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String renderedContents = renderer.render(markDownDocument);
+
+        Element htmlDocument = Jsoup.parse(renderedContents);
+        Elements imgTags = htmlDocument.getElementsByTag("img");
+
+        List<String> imgUrls = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(imgTags)){
+            for(Element imgTag : imgTags){
+                String imgUrl = imgTag.attr("src");
+                imgUrls.add(imgUrl);
+            }
+        }
+
         log.info("StudyServiceImpl: register...");
+
         return entity.getId();
     }
 

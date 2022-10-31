@@ -81,6 +81,12 @@ dependencies {
 
     /* SnakeYAML*/
     implementation 'org.yaml:snakeyaml:1.33'
+
+    /* Commonmark(markdown parser) */
+    implementation 'org.commonmark:commonmark:0.20.0'
+
+    /* JSOUP*/
+    implementation 'org.jsoup:jsoup:1.15.3'
 }
 
 tasks.named('test') {

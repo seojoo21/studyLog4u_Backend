@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MultipartUtil {
+public class MultipartFileUtil {
     private static final String IMG_ROOT_DIR = "images";
 
     /**
@@ -65,12 +65,10 @@ public class MultipartUtil {
     }
 
     public static String getDomain(){
-        String domain = "";
-
         Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-prod.yml");
         LinkedHashMap<String, Object> cloudMap = (LinkedHashMap<String, Object>) ymlMap.get("cloud");
         LinkedHashMap<String, Object> awsMap= (LinkedHashMap<String, Object>) cloudMap.get("aws");
-        domain = (String) awsMap.get("bucket-domain");
+        String domain = (String) awsMap.get("bucket-domain");
 
         return domain;
     }
