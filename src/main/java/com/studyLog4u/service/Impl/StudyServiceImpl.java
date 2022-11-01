@@ -1,31 +1,27 @@
 package com.studyLog4u.service.Impl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.studyLog4u.dto.FileMngDto;
 import com.studyLog4u.dto.PageRequestDto;
 import com.studyLog4u.dto.PageResultDto;
 import com.studyLog4u.dto.StudyDto;
+import com.studyLog4u.entity.FileMng;
 import com.studyLog4u.entity.QStudy;
 import com.studyLog4u.entity.Study;
 import com.studyLog4u.repository.FileMngRepository;
 import com.studyLog4u.repository.ReviewRepository;
 import com.studyLog4u.repository.StudyRepository;
 import com.studyLog4u.service.StudyService;
+import com.studyLog4u.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -50,24 +46,15 @@ public class StudyServiceImpl implements StudyService {
         // 신규 스터디 등록
         Study entity = dtoToEntity(dto);
         studyRepository.save(entity);
-
-        Parser parser = Parser.builder().build();
-        Node markDownDocument = parser.parse(dto.getContent());
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String renderedContents = renderer.render(markDownDocument);
-
-        Element htmlDocument = Jsoup.parse(renderedContents);
-        Elements imgTags = htmlDocument.getElementsByTag("img");
-
-        List<String> imgUrls = new ArrayList<>();
-        if(!ObjectUtils.isEmpty(imgTags)){
-            for(Element imgTag : imgTags){
-                String imgUrl = imgTag.attr("src");
-                imgUrls.add(imgUrl);
-            }
-        }
-
         log.info("StudyServiceImpl: register...");
+
+        String content = dto.getContent();
+        List<FileMng> files = CommonUtil.getUploadedFileList(content, "study_board", id);
+
+        if(!ObjectUtils.isEmpty(files)){
+            fileMngRepository.saveAll(files);
+            log.info("StudyServiceImpl: register Uploaded File Data...");
+        }
 
         return entity.getId();
     }
@@ -99,6 +86,8 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public void update(StudyDto dto) {
         Optional<Study> result = studyRepository.findById(dto.getId());
+        Optional<FileMng> fileResult = fileMngRepository.findAllByBoardId(dto.getId());
+
         if(result.isPresent()){
             Study entity = result.get();
 
@@ -109,6 +98,20 @@ public class StudyServiceImpl implements StudyService {
 
             studyRepository.save(entity);
             log.info("StudyServiceImpl: Update...");
+
+            String content = dto.getContent();
+            List<FileMng> files = CommonUtil.getUploadedFileList(content, "study_board", dto.getId());
+
+            if(!ObjectUtils.isEmpty(files)){
+                if(fileResult.isPresent()){ // 내용 수정 시 기존 이미지가 있는 경우
+                    FileMng fileMngEntity = fileResult.get();
+                    fileMngEntity.change(files);
+                    log.info("StudyServiceImpl: update Uploaded File Data...");
+                } else {
+                    fileMngRepository.saveAll(files);
+                    log.info("StudyServiceImpl: register Uploaded File Data...");
+                }
+            }
         }
     }
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class FileMngDto {
-    private Long fileSeq;
+    //private Long fileSeq;
     private String boardName;
     private Long boardId;
     private String fileType;
