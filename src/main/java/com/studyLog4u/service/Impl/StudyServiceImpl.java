@@ -34,7 +34,6 @@ public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
     private final ReviewRepository reviewRepository;
-
     private final FileMngRepository fileMngRepository;
 
     @Override

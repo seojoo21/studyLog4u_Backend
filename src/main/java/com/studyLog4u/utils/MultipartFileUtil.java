@@ -65,7 +65,7 @@ public class MultipartFileUtil {
     }
 
     public static String getDomain(){
-        Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-prod.yml");
+        Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-aws.yml");
         LinkedHashMap<String, Object> cloudMap = (LinkedHashMap<String, Object>) ymlMap.get("cloud");
         LinkedHashMap<String, Object> awsMap= (LinkedHashMap<String, Object>) cloudMap.get("aws");
         String domain = (String) awsMap.get("bucket-domain");

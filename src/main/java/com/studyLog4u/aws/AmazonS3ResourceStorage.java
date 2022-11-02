@@ -1,8 +1,7 @@
 package com.studyLog4u.aws;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import com.studyLog4u.utils.MultipartFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ public class AmazonS3ResourceStorage {
             amazonS3Client.putObject(new PutObjectRequest(bucket, fullPath, file)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
-            log.error("AWS Resource Storage Error :: " + e);
+            log.error("AWS Resource Storage Bucket Store Error :: " + e);
             throw new RuntimeException();
         } finally {
             if(file.exists()) {
@@ -36,4 +35,18 @@ public class AmazonS3ResourceStorage {
             }
         }
     }
+
+    public void delete(String fullPath){
+        try {
+            amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fullPath));
+        }
+        catch (Exception e) {
+            log.error("AWS Resource Storage Bucket Delete Error :: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+//    public void get(String fullPath){
+//        S3Object object = amazonS3Client.getObject(new GetObjectRequest(bucket, fullPath));
+//    }
 }

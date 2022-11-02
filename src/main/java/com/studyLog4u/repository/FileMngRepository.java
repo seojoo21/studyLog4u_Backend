@@ -8,8 +8,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface FileMngRepository extends JpaRepository<FileMng, Long>, QuerydslPredicateExecutor<FileMng> {
 
@@ -17,4 +17,6 @@ public interface FileMngRepository extends JpaRepository<FileMng, Long>, Queryds
     @Modifying
     @Query("delete from FileMng fm where fm.boardId = :studyId")
     void deleteByStudyBoardId(@Param("studyId")Long studyId);
+
+    List<FileMng> findAllByModDate(LocalDateTime date);
 }

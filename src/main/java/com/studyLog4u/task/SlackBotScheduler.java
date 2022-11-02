@@ -1,7 +1,8 @@
-package com.studyLog4u.slack;
+package com.studyLog4u.task;
 
 import com.studyLog4u.entity.Study;
 import com.studyLog4u.repository.StudyRepository;
+import com.studyLog4u.slack.SlackBotService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,16 +23,16 @@ public class SlackBotScheduler {
     private final StudyRepository studyRepository;
 
     @Scheduled(cron = "0 0 20 * * *") // 매일 오후 8시마다
-    public void setNotificationSchedule() {
-        log.info("Quartz Schedule Task Run Start...");
+    public void setSlackBotAlarmTaskSchedule() {
+        log.info(":::::::SlackBot Quartz Schedule Task Start:::::::");
         LocalDateTime notiDate = LocalDate.now().atTime(0,0);
 
         List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
-        log.info("===========StudyList=================");
+        log.info(":::::::SlackBot StudyList:::::::");
         studyList.forEach( study -> System.out.println(study));
-        log.info("===========StudyList=================");
+        log.info(":::::::SlackBot StudyList:::::::");
 
         studyList.forEach(slackBotService::setScheduleMessage);
-        log.info("Quartz Schedule Task Run Finish...");
+        log.info(":::::::SlackBot Quartz Schedule Task Finish:::::::");
     }
 }
