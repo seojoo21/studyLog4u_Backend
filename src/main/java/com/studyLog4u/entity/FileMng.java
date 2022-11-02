@@ -30,10 +30,4 @@ public class FileMng extends BaseEntity {
     @Column
     private String path; // 파일의 실제 물리적 경로
 
-    /* 수정 메서드*/
-    public void change(List<FileMng> files){
-        System.out.println("==========result=====");
-        files.forEach(System.out::println);
-        this.path = "";
-    }
 }

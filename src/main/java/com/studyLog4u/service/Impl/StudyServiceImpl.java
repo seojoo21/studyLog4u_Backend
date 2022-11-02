@@ -46,14 +46,14 @@ public class StudyServiceImpl implements StudyService {
         // 신규 스터디 등록
         Study entity = dtoToEntity(dto);
         studyRepository.save(entity);
-        log.info("StudyServiceImpl: register...");
+        log.info("StudyServiceImpl: Register...");
 
         String content = dto.getContent();
         List<FileMng> files = CommonUtil.getUploadedFileList(content, "study_board", id);
 
         if(!ObjectUtils.isEmpty(files)){
             fileMngRepository.saveAll(files);
-            log.info("StudyServiceImpl: register Uploaded File Data...");
+            log.info("StudyServiceImpl: Register Uploaded File Data...");
         }
 
         return entity.getId();
@@ -79,6 +79,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public void delete(Long id) {
         reviewRepository.deleteByStudyId(id); // 스터디 삭제 시 해당 스터디의 리뷰도 함께 삭제한다. (FK로 연결되어 있으므로 자식 테이블에서 먼저 삭제)
+        fileMngRepository.deleteByStudyBoardId(id); // 스터디 삭제 시 해당 스터디의 파일 데이터도 함께 삭제한다.
         studyRepository.deleteById(id);
         log.info("StudyServiceImpl: Delete...");
     }
@@ -86,7 +87,6 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public void update(StudyDto dto) {
         Optional<Study> result = studyRepository.findById(dto.getId());
-        Optional<FileMng> fileResult = fileMngRepository.findAllByBoardId(dto.getId());
 
         if(result.isPresent()){
             Study entity = result.get();
@@ -100,18 +100,11 @@ public class StudyServiceImpl implements StudyService {
             log.info("StudyServiceImpl: Update...");
 
             String content = dto.getContent();
-            List<FileMng> files = CommonUtil.getUploadedFileList(content, "study_board", dto.getId());
+            List<FileMng> contentFiles = CommonUtil.getUploadedFileList(content, "study_board", dto.getId());
+            fileMngRepository.deleteByStudyBoardId(dto.getId());
+            fileMngRepository.saveAll(contentFiles);
+            log.info("StudyServiceImpl: Update Uploaded File Data...");
 
-            if(!ObjectUtils.isEmpty(files)){
-                if(fileResult.isPresent()){ // 내용 수정 시 기존 이미지가 있는 경우
-                    FileMng fileMngEntity = fileResult.get();
-                    fileMngEntity.change(files);
-                    log.info("StudyServiceImpl: update Uploaded File Data...");
-                } else {
-                    fileMngRepository.saveAll(files);
-                    log.info("StudyServiceImpl: register Uploaded File Data...");
-                }
-            }
         }
     }
 
