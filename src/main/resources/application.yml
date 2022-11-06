@@ -3,5 +3,5 @@ server:
 
 spring:
   profiles:
-    include: oauth, aws
-    active: prod #prod or local
+    #include: oauth, aws
+    active: deploy #deploy or local
