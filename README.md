@@ -42,3 +42,11 @@
 - Swap memory 추가 설정 
 - Jenkins Github 연동 및 CI/CD 구축
   <img width="994" alt="스크린샷 2022-10-22 오전 12 10 14" src="https://user-images.githubusercontent.com/98722435/197228962-34803c73-e726-463b-a85b-80ff55c9581b.png">
+
+#### 2022.11.06 Version 1.2
+- AWS Lightsail 객체 스토리지 생성 및 서버 적용
+- AWS Lightsail 객체 스토리지를 활용한 게시물 내 이미지 파일 삽입 기능 추가
+  - base64로 변환되는 이미지 파일의 업로드 방식을 AWS Ligthsail 객체의 URL로 변경해주는 API 구현
+  - AWS Lightsail 객체 용량 관리를 위해 서버에는 업로드 되어있으나 실제로 게시물에서 사용하지 않는 이미지 파일들은 매일 새벽 2시 일괄 삭제되도록 스케줄러 기능 구현
+- 운영 배포용 application-deploy.yml 적용 (기존 application-prod.yml은 삭제)
+  - 운영 배포용 설정 파일은 더이상 github을 통해 빌드하지 않고 별도로 서버에서 직접 관리할 예정 
