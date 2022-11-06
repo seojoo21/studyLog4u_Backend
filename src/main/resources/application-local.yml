@@ -6,8 +6,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: ENC(SM2SX86yFuXBR2xw8P0EfhmNTiXLP29JZWVKpfJv5zBGVknBVfRNYNR0VBoP9iL3)
-    username: ENC(CpCbsQu6fcwZCobic6W+vA==)
-    password: ENC(/51HnqYXmorh8LyUlBHVcA==)
+    username: ENC(AGh9edGe23clEkN1lqwdN40OOwfuJRk0)
+    password: ENC(HwvBK09P6X2Nryj0IEAnZw==)
 
   jpa:
     hibernate:
