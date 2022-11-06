@@ -29,7 +29,7 @@ public class SlackBotScheduler {
 
         List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
         log.info(":::::::SlackBot StudyList:::::::");
-        studyList.forEach( study -> System.out.println(study));
+        studyList.forEach( study -> log.info(String.valueOf(study)));
         log.info(":::::::SlackBot StudyList:::::::");
 
         studyList.forEach(slackBotService::setScheduleMessage);

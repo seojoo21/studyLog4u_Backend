@@ -18,5 +18,5 @@ public interface FileMngRepository extends JpaRepository<FileMng, Long>, Queryds
     @Query("delete from FileMng fm where fm.boardId = :studyId")
     void deleteByStudyBoardId(@Param("studyId")Long studyId);
 
-    List<FileMng> findAllByModDate(LocalDateTime date);
+    List<FileMng> findAllByPathContains(String path);
 }

@@ -48,22 +48,20 @@ public class MultipartFileUtil {
      */
     public static String createPath(String fileId, String format){
         LocalDate date = LocalDate.now();
-        int monthValue = date.getMonthValue();
-        int dayValue = date.getDayOfMonth();
+        String baseDir = CommonUtil.getYYYYMMDDDirPath(date, IMG_ROOT_DIR, fileId, format);
 
-        String yyyy = String.valueOf(date.getYear());
-        String MM = monthValue < 10 ? "0"+String.valueOf(monthValue) : String.valueOf(monthValue);
-        String dd = dayValue  < 10 ? "0"+String.valueOf(dayValue) : String.valueOf(dayValue);
-        String base_dir = IMG_ROOT_DIR + File.separator + yyyy + File.separator + MM + File.separator + dd + File.separator + fileId + "." + format;
-
-        File pathDirectory = new File(getLocalHomeDirectory(), base_dir);
+        File pathDirectory = new File(getLocalHomeDirectory(), baseDir);
         if(!pathDirectory.exists()) {
             pathDirectory.mkdirs();
         }
 
-        return base_dir;
+        return baseDir;
     }
 
+    /**
+     * application-aws.yml 파일에서 bucket-domain 값을 가져옴
+     * @return
+     */
     public static String getDomain(){
         Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-aws.yml");
         LinkedHashMap<String, Object> cloudMap = (LinkedHashMap<String, Object>) ymlMap.get("cloud");

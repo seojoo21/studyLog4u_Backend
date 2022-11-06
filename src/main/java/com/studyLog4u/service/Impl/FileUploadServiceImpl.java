@@ -16,7 +16,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public FileDetailDto save(MultipartFile multipartFile) {
         FileDetailDto fileDetailDto = FileDetailDto.multipartOf(multipartFile);
-        amazonS3ResourceStorage.store(fileDetailDto.getPath(), multipartFile);
+        amazonS3ResourceStorage.storeObject(fileDetailDto.getPath(), multipartFile);
         return fileDetailDto;
     }
 }
