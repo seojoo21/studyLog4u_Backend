@@ -50,3 +50,8 @@
   - AWS Lightsail 객체 용량 관리를 위해 서버에는 업로드 되어있으나 실제로 게시물에서 사용하지 않는 이미지 파일들은 매일 새벽 2시 일괄 삭제되도록 스케줄러 기능 구현
 - 운영 배포용 application-deploy.yml 적용 (기존 application-prod.yml은 삭제)
   - 운영 배포용 설정 파일은 더이상 github을 통해 빌드하지 않고 별도로 서버에서 직접 관리할 예정 
+
+#### 2022.11.09 Version 1.3
+- AWS Lightsail 객체 관리 관련 코드 리팩토링
+  - 스케줄러 클래스인 AwsBucketMngScheduler는 Quartz Scheduler Cron Job만 처리하도록 코드를 단순화 하고, 실제 파일 관리 로직은 AwsBucketMngService에 구현
+  - nullPointException을 피하기 위해 유효성 조건 분기 처리 추가  

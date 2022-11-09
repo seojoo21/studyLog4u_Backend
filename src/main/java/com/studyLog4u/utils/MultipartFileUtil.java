@@ -1,5 +1,6 @@
 package com.studyLog4u.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
@@ -8,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Slf4j
 public class MultipartFileUtil {
     private static final String IMG_ROOT_DIR = "images";
 
@@ -59,11 +61,11 @@ public class MultipartFileUtil {
     }
 
     /**
-     * application-aws.yml 파일에서 bucket-domain 값을 가져옴
-     * @return
+     * yml 파일에서 bucket-domain 값을 가져옴
+     * @return domain 주소
      */
     public static String getDomain(){
-        Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-aws.yml");
+        Map<String, Object> ymlMap = ConfigValueLoader.loadYml("application-deploy.yml");
         LinkedHashMap<String, Object> cloudMap = (LinkedHashMap<String, Object>) ymlMap.get("cloud");
         LinkedHashMap<String, Object> awsMap= (LinkedHashMap<String, Object>) cloudMap.get("aws");
         String domain = (String) awsMap.get("bucket-domain");
