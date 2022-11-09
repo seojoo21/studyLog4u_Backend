@@ -54,4 +54,5 @@
 #### 2022.11.09 Version 1.3
 - AWS Lightsail 객체 관리 관련 코드 리팩토링
   - 스케줄러 클래스인 AwsBucketMngScheduler는 Quartz Scheduler Cron Job만 처리하도록 코드를 단순화 하고, 실제 파일 관리 로직은 AwsBucketMngService에 구현
-  - nullPointException을 피하기 위해 유효성 조건 분기 처리 추가  
+  - nullPointException을 피하기 위해 유효성 조건 분기 처리 추가
+- Multipart File 용량 제한 10MB로 상향 조정 
