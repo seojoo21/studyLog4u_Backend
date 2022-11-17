@@ -55,12 +55,16 @@ public class JwtFilter extends GenericFilterBean {
 
         log.debug("doFilter jwt :: " + jwt);
 
-        if(StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)){
-            Authentication authentication = jwtTokenService.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+        if(requestURI.contains("/api/oauth/") || requestURI.contains("/oauth2/callback")){
+            log.info("Social Login Oauth2 인증 진행 중입니다. uri: {}", requestURI);
         } else {
-            log.error("유효한 JWT 토큰이 없습니다. uri: {}", requestURI);
+            if(StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)){
+                Authentication authentication = jwtTokenService.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+            } else {
+                log.error("유효한 JWT 토큰이 없습니다. uri: {}", requestURI);
+            }
         }
         chain.doFilter(request, response);
     }

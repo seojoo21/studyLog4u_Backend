@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,6 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**", "/favicon.ico");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // CORS 허용 & JWT 토큰을 사용하므로 csrf disabled
@@ -45,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 권한 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**", "/favicon.ico").permitAll()
+                //.antMatchers("/studyLog4uAPI.html", "/swagger-ui/**", "/api-docs/**", "/favicon.ico").permitAll()
                 .antMatchers("/api/oauth/**", "/oauth2/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .anyRequest().authenticated()

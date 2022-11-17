@@ -28,11 +28,16 @@ public class SlackBotScheduler {
         LocalDateTime notiDate = LocalDate.now().atTime(0,0);
 
         List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
-        log.info(":::::::SlackBot StudyList:::::::");
-        studyList.forEach( study -> log.info(String.valueOf(study)));
-        log.info(":::::::SlackBot StudyList:::::::");
+        
+        if(studyList.isEmpty()) {
+            log.info("::::::: There's no study list on "+LocalDate.now() +" :::::::");
+        } else {
+            log.info(":::::::SlackBot StudyList:::::::");
+            studyList.forEach( study -> log.info(String.valueOf(study)));
+            log.info(":::::::SlackBot StudyList:::::::");
+            studyList.forEach(slackBotService::setScheduleMessage);
+        }
 
-        studyList.forEach(slackBotService::setScheduleMessage);
         log.info(":::::::SlackBot Quartz Schedule Task Finish:::::::");
     }
 }
