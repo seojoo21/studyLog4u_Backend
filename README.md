@@ -56,3 +56,10 @@
   - 스케줄러 클래스인 AwsBucketMngScheduler는 Quartz Scheduler Cron Job만 처리하도록 코드를 단순화 하고, 실제 파일 관리 로직은 AwsBucketMngService에 구현
   - nullPointException을 피하기 위해 유효성 조건 분기 처리 추가
 - Multipart File 용량 제한 10MB로 상향 조정 
+
+#### 2022.11.18 Version 1.4
+- JwtFilter에 Social Login Oauth2 URI 예외 처리 추가
+  - Oauth2 로그인 처리 URI 대해 Spring Security Context에서 JWT가 없어 에러로 간주하던 오류를 예외 처리를 추가하여 수정
+- SecurityConfig에 Web Ignoring 추가
+  - configure(WebSecurity web) 메소드를 오버라이드하여 Swagger 관련 경로를 Spring Security Authorization과 무관하게 처리하도록 수정
+- 오늘 복습할 스터디 리스트를 조회하는 API 추가 (/api/study/getTodayStudyList)

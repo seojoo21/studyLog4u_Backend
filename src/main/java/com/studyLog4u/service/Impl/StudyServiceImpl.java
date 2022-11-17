@@ -22,6 +22,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -105,6 +107,13 @@ public class StudyServiceImpl implements StudyService {
             log.info("StudyServiceImpl: Update Uploaded File Data...");
 
         }
+    }
+
+    @Override
+    public List<Study> getTodayStudyList() {
+        LocalDateTime notiDate = LocalDate.now().atTime(0,0);
+        log.info("StudyServiceImpl: getTodaysStudyList...");
+        return studyRepository.findAllByNotiDate(notiDate);
     }
 
     // 검색 처리 메서드 (Querydsl 처리)

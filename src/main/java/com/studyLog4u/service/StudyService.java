@@ -5,12 +5,17 @@ import com.studyLog4u.dto.PageResultDto;
 import com.studyLog4u.dto.StudyDto;
 import com.studyLog4u.entity.Study;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface StudyService {
     Long register(StudyDto dto);
     PageResultDto<StudyDto, Study> getList(PageRequestDto dto);
     StudyDto get(Long id);
     void delete(Long id);
     void update(StudyDto dto);
+
+    List<Study> getTodayStudyList();
 
     /* DTO to Entity */
     default Study dtoToEntity(StudyDto dto){

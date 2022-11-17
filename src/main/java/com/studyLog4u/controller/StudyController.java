@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name="Study Controller", description = "스터디 등록 관련 컨트롤러")
 @RestController
@@ -95,5 +96,13 @@ public class StudyController {
         service.update(studyDto);
         String message = "스터디 수정 성공: " + id;
         return new ApiDataResponse<>(message);
+    }
+
+    @ApiDocumentResponse
+    @Operation(summary = "오늘 복습할 스터디 리스트 조회", description = "오늘 복습할 스터디 리스트를 조회하는 API 입니다.")
+    @GetMapping(value="/getTodayStudyList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiDataResponse<List<Study>> getTodayStudyList(){
+        log.info("StudyController 오늘 복습할 스터디 리스트 조회");
+        return new ApiDataResponse<>(service.getTodayStudyList());
     }
 }
