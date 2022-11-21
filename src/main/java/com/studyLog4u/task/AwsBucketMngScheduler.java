@@ -24,7 +24,7 @@ public class AwsBucketMngScheduler {
 
         List<String> removeFilesList = awsBucketMngService.createRemoveFileList();
 
-        if(removeFilesList.isEmpty()) {
+        if(removeFilesList == null || removeFilesList.isEmpty()) {
             log.info("::::::: There's no remove job on "+LocalDate.now() +" :::::::");
         } else {
             log.info("::::::: Remove Job List on "+LocalDate.now()+" :::::::");

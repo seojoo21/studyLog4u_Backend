@@ -29,7 +29,7 @@ public class SlackBotScheduler {
 
         List<Study> studyList = studyRepository.findAllByNotiDate(notiDate);
         
-        if(studyList.isEmpty()) {
+        if(studyList == null || studyList.isEmpty()) {
             log.info("::::::: There's no study list on "+LocalDate.now() +" :::::::");
         } else {
             log.info(":::::::SlackBot StudyList:::::::");
